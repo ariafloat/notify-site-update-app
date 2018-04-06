@@ -57,7 +57,7 @@ module.exports.syros = function (dataNews) {
   for (let i = 0; i < divNews.length; i += 1) {
     resulNews.push({
       date: divNews[i].children[1].children[0].children[0].data,
-      title: divNews[i].children[3].children[1].children[0].data,
+      title: divNews[i].children[3].children[1].children[0].data.trim(),
       url: divNews[i].children[3].children[1].attribs.href,
     });
     if (i >= 4) break;
