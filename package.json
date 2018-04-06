@@ -1,0 +1,25 @@
+{
+  "name": "notify-site-update-app",
+  "version": "0.0.1",
+  "description": "Notify site update",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.16.3",
+    "node-fetch": "^2.1.2",
+    "cheerio": "^1.0.0-rc.2",
+    "nedb-promise": "^2.0.1"
+  },
+  "engines": {
+    "node": "9.x"
+  },
+  "repository": {
+    "url": "https://glitch.com/edit/#!/notify-site-update-app"
+  },
+  "license": "MIT",
+  "keywords": [
+    "bot",
+    "notification"
+  ]
+}
