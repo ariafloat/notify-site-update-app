@@ -17,8 +17,8 @@ module.exports.raqualia = function (data) {
   }
   const $c = cheerio.load(data);
   const dl = $c("div[class='box'] dl");
-  return twoParse(dl[0], '').concat(twoParse(dl[1], 'http://www.raqualia.co.jp/'));
-}
+  return twoParse(dl[0], '').concat(twoParse(dl[1], ''));
+};
 
 module.exports.askat = function (data) {
   const result = [];
@@ -33,7 +33,7 @@ module.exports.askat = function (data) {
     if (i >= 4) break;
   }
   return result;
-}
+};
 
 module.exports.aratana = function (data) {
   const result = [];
@@ -48,7 +48,7 @@ module.exports.aratana = function (data) {
     if (i >= 4) break;
   }
   return result;
-}
+};
 
 module.exports.syros = function (dataNews) {
   const resulNews = [];
@@ -63,4 +63,4 @@ module.exports.syros = function (dataNews) {
     if (i >= 4) break;
   }
   return resulNews;
-}
+};

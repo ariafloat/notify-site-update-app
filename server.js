@@ -2,6 +2,7 @@ const express = require('express');
 const fetch = require('node-fetch');
 const datastore = require('nedb-promise');
 const parserHtml = require('./src/parser-html');
+const post = require('./src/post-msg');
 
 const db = {};
 db.raqualia = new datastore({ filename: '.data/raqualia.db', autoload: true });
@@ -32,25 +33,14 @@ async function getSiteHtml(siteName, url) {
   return parserHtml[siteName](html);
 }
 
-function postSlack(postName, value) {
-  const postData = {
-    channel: process.env.SLACK_CHANNEL,
-    text: `${postName}:\n${value.date}「${value.title}」\n${value.url}`,
-  };
-  fetch(process.env.SLACK_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(postData),
-  }).then(res => res.text()).then(console.log).catch(console.error);
-}
-
 async function detectChange(siteName, latestData, postName) {
   const pastData = await db[siteName].find({});
   if (pastData.length > 0) {
     const changeData = latestData.filter(latest => !pastData.some(past => past.url === latest.url));
     if (changeData.length > 0) {
       changeData.forEach((v) => {
-        postSlack(postName, v);
+        post.slack(postName, v);
+        post.twitter(postName, v);
       });
       await db[siteName].remove({}, { multi: true });
       await db[siteName].insert(latestData);
