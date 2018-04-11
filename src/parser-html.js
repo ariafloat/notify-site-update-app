@@ -6,10 +6,11 @@ module.exports.raqualia = function (data) {
     const dd = dl.children.filter(v => v.name === 'dd');
     if (dt.length > 5) dt.splice(5, (dt.length - 5));
     const result = dt.map((element, index) => {
+      const getUrl = dd[index].children[1].attribs.href;
       const res = {
         date: element.children[0].data,
         title: dd[index].children[1].children[0].data,
-        url: `${topUrl}${dd[index].children[1].attribs.href}`,
+        url: getUrl.match(/^http/) ? getUrl : `${topUrl}${getUrl}`,
       };
       return res;
     });
@@ -17,7 +18,7 @@ module.exports.raqualia = function (data) {
   }
   const $c = cheerio.load(data);
   const dl = $c("div[class='box'] dl");
-  return twoParse(dl[0], '').concat(twoParse(dl[1], ''));
+  return twoParse(dl[0], 'http://www.raqualia.co.jp/').concat(twoParse(dl[1], 'http://www.raqualia.co.jp/'));
 };
 
 module.exports.askat = function (data) {
