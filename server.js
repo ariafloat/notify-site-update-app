@@ -20,7 +20,7 @@ app.get('/', (request, response) => {
   response.sendFile(`${__dirname}/views/index.html`);
 });
 
-const raqualiaSite = { name: 'raqualia', url: 'http://www.raqualia.co.jp/', postName: 'ラクオリア創薬' }
+const raqualiaSite = { name: 'raqualia', url: 'https://www.raqualia.co.jp/', postName: 'ラクオリア創薬' }
 const sites = [
   { name: 'askat', url: 'http://askat-inc.com/japanese/news/', postName: 'AskAt' },
   { name: 'aratana', url: 'http://www.aratana.com/news/', postName: 'Aratana' },
