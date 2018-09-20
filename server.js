@@ -20,8 +20,8 @@ app.get('/', (request, response) => {
   response.sendFile(`${__dirname}/views/index.html`);
 });
 
+const raqualiaSite = { name: 'raqualia', url: 'http://www.raqualia.co.jp/', postName: 'ラクオリア創薬' }
 const sites = [
-  { name: 'raqualia', url: 'http://www.raqualia.co.jp/', postName: 'ラクオリア創薬' },
   { name: 'askat', url: 'http://askat-inc.com/japanese/news/', postName: 'AskAt' },
   { name: 'aratana', url: 'http://www.aratana.com/news/', postName: 'Aratana' },
   { name: 'syros', url: 'https://ir.syros.com/press-releases', postName: 'Syros' },
@@ -49,6 +49,14 @@ async function detectChange(siteName, latestData, postName) {
 }
 
 const start = function () {
+  fetch(raqualiaSite.url)
+    .then(res => res.text())
+    .then((html) => {
+      parserHtml.raqualia(html).then((latestData) => {
+        detectChange(raqualiaSite.name, latestData, raqualiaSite.postName).catch(console.error);
+      }).catch(console.error);
+    }).catch(console.error);
+  
   sites.forEach((site) => {
     getSiteHtml(site.name, site.url).then((latestData) => {
       detectChange(site.name, latestData, site.postName).catch(console.error);
