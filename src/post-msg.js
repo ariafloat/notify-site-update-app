@@ -4,7 +4,7 @@ const twitter = require('twitter');
 module.exports.slack = function (postName, value) {
   const postData = {
     channel: process.env.SLACK_CHANNEL,
-    text: `${postName}:\n${value.date}「${value.title}」\n${value.url}`,
+    text: `【${postName}】\n${value.date}「${value.title}」\n${value.url}`,
   };
   fetch(process.env.SLACK_URL, {
     method: 'POST',
@@ -20,7 +20,7 @@ module.exports.twitter = function (postName, value) {
     access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
     access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
   });
-  const text = `${postName}:\n${value.date}「${value.title}」\n${value.url}`;
+  const text = `【${postName}】\n${value.date}「${value.title}」\n${encodeURI(value.url)}`;
   client.post('statuses/update', {status: text}, function(error, tweet, response) {
     if(error) console.error(error);
     console.log(tweet); // Tweet body
