@@ -22,7 +22,7 @@ app.get('/', (request, response) => {
 
 const raqualiaSite = { name: 'raqualia', url: 'https://www.raqualia.co.jp/', postName: 'ラクオリア創薬' }
 const sites = [
-  { name: 'askat', url: 'http://askat-inc.com/japanese/news/', postName: 'AskAt' },
+  { name: 'askat', url: 'https://askat-inc.com/japanese/news/', postName: 'AskAt' },
   { name: 'aratana', url: 'http://www.aratana.com/news/', postName: 'Aratana' },
   { name: 'syros', url: 'https://ir.syros.com/press-releases', postName: 'Syros' },
 ];
