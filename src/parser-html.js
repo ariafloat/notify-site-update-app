@@ -60,16 +60,31 @@ module.exports.aratana = function (data) {
 };
 
 module.exports.syros = function (dataNews) {
-  const resulNews = [];
+  const resultNews = [];
   const $cn = cheerio.load(dataNews);
   const divNews = $cn("div[class='media-body']");
   for (let i = 0; i < divNews.length; i += 1) {
-    resulNews.push({
+    resultNews.push({
       date: divNews[i].children[1].children[0].children[0].data,
       title: divNews[i].children[3].children[1].children[0].data.trim(),
       url: divNews[i].children[3].children[1].attribs.href,
     });
     if (i >= 4) break;
   }
-  return resulNews;
+  return resultNews;
+};
+
+module.exports.luoxin = function (dataNews) {
+  const resultNews = [];
+  const $cn = cheerio.load(dataNews);
+  const divNews = $cn("div[class='news'] ul li");
+  for (let i = 0; i < divNews.length; i += 1) {
+    resultNews.push({
+      date: divNews[i].children[1].children[5].children[0].data,
+      title: divNews[i].children[1].children[3].children[0].data,
+      url: 'https://www.luoxin.cn' + divNews[i].children[1].attribs.href,
+    });
+    if (i >= 4) break;
+  }
+  return resultNews;
 };
