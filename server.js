@@ -7,7 +7,6 @@ const post = require('./src/post-msg');
 const db = {};
 db.raqualia = new datastore({ filename: '.data/raqualia.db', autoload: true });
 db.askat = new datastore({ filename: '.data/askat.db', autoload: true });
-db.aratana = new datastore({ filename: '.data/aratana.db', autoload: true });
 db.syros = new datastore({ filename: '.data/syros.db', autoload: true });
 db.luoxin = new datastore({ filename: '.data/luoxin.db', autoload: true });
 
@@ -24,7 +23,6 @@ app.get('/', (request, response) => {
 const raqualiaSite = { name: 'raqualia', url: 'https://www.raqualia.co.jp/', postName: 'ラクオリア創薬', twitter: true }
 const sites = [
   { name: 'askat', url: 'https://askat-inc.com/japanese/news/', postName: 'AskAt', twitter: false },
-  { name: 'aratana', url: 'https://www.aratana.com/news/', postName: 'Aratana', twitter: false },
   { name: 'syros', url: 'https://ir.syros.com/press-releases', postName: 'Syros', twitter: false },
   { name: 'luoxin', url: 'https://www.luoxin.cn/list.aspx?node=53', postName: 'Luoxin', twitter: false },
 ];
