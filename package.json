@@ -6,21 +6,13 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.17.1",
     "node-fetch": "^2.6.0",
     "cheerio": "^1.0.0-rc.2",
     "nedb-promise": "^2.0.1",
     "twitter": "^1.7.1"
   },
-  "engines": {
-    "node": "9.x"
-  },
   "repository": {
-    "url": "https://glitch.com/edit/#!/notify-site-update-app"
+    "url": "https://github.com/ariafloat/notify-site-update-app"
   },
-  "license": "MIT",
-  "keywords": [
-    "bot",
-    "notification"
-  ]
+  "license": "MIT"
 }

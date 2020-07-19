@@ -1,4 +1,3 @@
-const express = require('express');
 const fetch = require('node-fetch');
 const datastore = require('nedb-promise');
 const parserHtml = require('./src/parser-html');
@@ -9,16 +8,6 @@ db.raqualia = new datastore({ filename: '.data/raqualia.db', autoload: true });
 db.askat = new datastore({ filename: '.data/askat.db', autoload: true });
 db.syros = new datastore({ filename: '.data/syros.db', autoload: true });
 db.luoxin = new datastore({ filename: '.data/luoxin.db', autoload: true });
-
-const app = express();
-
-// http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'));
-
-// http://expressjs.com/en/starter/basic-routing.html
-app.get('/', (request, response) => {
-  response.sendFile(`${__dirname}/views/index.html`);
-});
 
 const raqualiaSite = { name: 'raqualia', url: 'https://www.raqualia.co.jp/', postName: 'ラクオリア創薬', twitter: true }
 const sites = [
@@ -66,8 +55,3 @@ const start = function () {
 };
 
 setInterval(start, 60000);
-
-// listen for requests :)
-const listener = app.listen(process.env.PORT, () => {
-  console.log(`Your app is listening on port ${listener.address().port}`);
-});
