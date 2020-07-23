@@ -1,3 +1,4 @@
+const express = require('express');
 const fetch = require('node-fetch');
 const datastore = require('nedb-promise');
 const parserHtml = require('./src/parser-html');
@@ -15,6 +16,40 @@ const sites = [
   { name: 'syros', url: 'https://ir.syros.com/press-releases', postName: 'Syros', twitter: false },
   { name: 'luoxin', url: 'https://www.luoxin.cn/list.aspx?node=53', postName: 'Luoxin', twitter: false },
 ];
+
+let update = null; // クローリング日時
+
+const app = express();
+app.use(express.static('public'));
+app.set('view engine', 'ejs');
+
+app.get('/stock-dream', (req, res) => {
+  getDbInfo().then((data) => {
+    data.update = update;
+    res.render(`${__dirname}/views/index.ejs`, data);
+  });
+});
+
+async function getDbInfo() {
+  const siteNames = ['raqualia', 'askat', 'syros', 'luoxin'];
+  const result = {};
+  for (let i = 0; i < siteNames.length; i++) {
+    const data = await db[siteNames[i]].find({});
+    const list = [];
+    data.forEach((ele) => {
+      list.push({
+        date: ele.date,
+        title: ele.title,
+        url: ele.url
+      });
+    });
+    list.sort((a, b) => {
+      return (a.date < b.date ? 1 : -1);
+    });
+    result[siteNames[i]] = list;
+  }
+  return result;
+}
 
 async function getSiteHtml(siteName, url) {
   const fetchData = await fetch(url);
@@ -40,6 +75,7 @@ async function detectChange(siteName, latestData, postName, twitter) {
 }
 
 const start = function () {
+  update = new Date();
   fetch(raqualiaSite.url)
     .then(res => res.text())
     .then((html) => {
@@ -55,3 +91,7 @@ const start = function () {
 };
 
 setInterval(start, 60000);
+
+const listener = app.listen(process.env.PORT, () => {
+  console.log(`Your app is listening on port ${listener.address().port}`);
+});
