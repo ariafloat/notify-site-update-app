@@ -62,12 +62,14 @@ module.exports.syros = function (dataNews) {
 module.exports.luoxin = function (dataNews) {
   const resultNews = [];
   const $cn = cheerio.load(dataNews);
-  const divNews = $cn("div[class='news'] ul li");
-  for (let i = 0; i < divNews.length; i += 1) {
+  const url = $cn("div[class='news'] ul li a");
+  const title = $cn("div[class='news'] ul li h4");
+  const date = $cn("div[class='news'] ul li h5[class='h51']");
+  for (let i = 0; i < url.length; i += 1) {
     resultNews.push({
-      date: divNews[i].children[1].children[5].children[0].data,
-      title: divNews[i].children[1].children[3].children[0].data,
-      url: 'https://www.luoxin.cn' + divNews[i].children[1].attribs.href,
+      date: date[i].children[0].data,
+      title: title[i].children[0].data,
+      url: 'https://www.luoxin.cn' + url[i].attribs.href,
     });
     if (i >= 4) break;
   }
