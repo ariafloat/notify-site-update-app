@@ -10,7 +10,7 @@ db.askat = new datastore({ filename: '.data/askat.db', autoload: true });
 db.syros = new datastore({ filename: '.data/syros.db', autoload: true });
 db.luoxin = new datastore({ filename: '.data/luoxin.db', autoload: true });
 
-const raqualiaSite = { name: 'raqualia', url: 'https://www.raqualia.co.jp/', postName: 'ラクオリア創薬', twitter: true }
+const raqualiaSite = { name: 'raqualia', url: 'https://www.raqualia.co.jp/', postName: 'ラクオリア創薬', twitter: false }
 const sites = [
   { name: 'askat', url: 'https://askat-inc.com/japanese/news/', postName: 'AskAt', twitter: false },
   { name: 'syros', url: 'https://ir.syros.com/press-releases', postName: 'Syros', twitter: false },
