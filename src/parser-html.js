@@ -1,32 +1,21 @@
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 
-module.exports.raqualia = function (data) {
-  return fetch('https://www.raqualia.co.jp/ir/api/recent')
-    .then(res => res.json())
-    .then((json) => {
-      const resultPress = [];
-      for (let i = 0; i < json.length; i += 1) {
-        resultPress.push({
-          date: json[i].pubdate,
-          title: json[i].title,
-          url: `https://www.raqualia.co.jp/${json[i].document_url}`,
-        });
-        if (i >= 4) break;
-      }
-      const resultNews = [];
-      const $c = cheerio.load(data);
-      const li = $c("ul[id='view1'] li[class='m-headline_list--item']");
-      for (let i = 0; i < li.length; i += 1) {
-        resultNews.push({
-          date: li[i].children[1].children[1].children[0].data,
-          title: li[i].children[1].children[7].children[0].data,
-          url: li[i].children[1].attribs.href,
-        });
-        if (i >= 4) break;
-      }
-      return resultPress.concat(resultNews); 
-  });
+module.exports.raqualia = function (dataNews) {
+  const resultNews = [];
+  const $cn = cheerio.load(dataNews);
+  const url = $cn("ul[class='tabItems'] li a");
+  const title = $cn("ul[class='tabItems'] li span[class='news_tx']");
+  const date = $cn("ul[class='tabItems'] li span[class='date']");
+  for (let i = 0; i < url.length; i += 1) {
+    resultNews.push({
+      date: date[i].children[0].data,
+      title: title[i].children[0].data,
+      url: 'https://www.raqualia.com' + url[i].attribs.href,
+    });
+    if (i >= 4) break;
+  }
+  return resultNews;
 };
 
 module.exports.askat = function (data) {

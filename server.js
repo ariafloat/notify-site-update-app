@@ -10,8 +10,8 @@ db.askat = new datastore({ filename: '.data/askat.db', autoload: true });
 db.syros = new datastore({ filename: '.data/syros.db', autoload: true });
 db.luoxin = new datastore({ filename: '.data/luoxin.db', autoload: true });
 
-const raqualiaSite = { name: 'raqualia', url: 'https://www.raqualia.co.jp/', postName: 'ラクオリア創薬', twitter: false }
 const sites = [
+  { name: 'raqualia', url: 'https://www.raqualia.com/ja/news.html', postName: 'ラクオリア創薬', twitter: false },
   { name: 'askat', url: 'https://askat-inc.com/japanese/news/', postName: 'AskAt', twitter: false },
   { name: 'syros', url: 'https://ir.syros.com/press-releases', postName: 'Syros', twitter: false },
   { name: 'luoxin', url: 'https://www.luoxin.cn/list.aspx?node=53', postName: 'Luoxin', twitter: false },
@@ -76,13 +76,6 @@ async function detectChange(siteName, latestData, postName, twitter) {
 
 const start = function () {
   update = new Date();
-  fetch(raqualiaSite.url)
-    .then(res => res.text())
-    .then((html) => {
-      parserHtml.raqualia(html).then((latestData) => {
-        detectChange(raqualiaSite.name, latestData, raqualiaSite.postName, raqualiaSite.twitter).catch(console.error);
-      }).catch(console.error);
-    }).catch(console.error);
   sites.forEach((site) => {
     getSiteHtml(site.name, site.url).then((latestData) => {
       detectChange(site.name, latestData, site.postName, site.twitter).catch(console.error);
